@@ -2,9 +2,9 @@ const CoinKey = require('coinkey');
 
 const generate = () => {
     const rand = 9223372036854775807 + Math.random() * (18446744073709551615 + 1 - 9223372036854775807);
-    const start = Math.floor(rand);
+    const start = BigInt(Math.floor(rand));
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0n; i < 100000n; i++) {
         const privateKey = `0000000000000000000000000000000000000000000000000000000000000000${BigInt(start + i).toString(
             16,
         )}`.slice(-64);
@@ -15,7 +15,9 @@ const generate = () => {
             console.log(privateKey, i, start)
         }
     }
+
+    setImmediate(generate);
 };
 
-setInterval(generate, 1000);
+generate();
 
